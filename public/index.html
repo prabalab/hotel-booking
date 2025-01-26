@@ -75,6 +75,13 @@
 
           if (response.ok) {
             alert(`Booking confirmed for ${formData.name} (${formData.roomType} room).`);
+            setFormData({
+        name: "",
+        email: "",
+        roomType: "Single",
+        checkIn: "",
+        checkOut: "",
+      });
           } else {
             alert(`Error: ${result.message}`);
           }
