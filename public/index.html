@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Room Booking</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="text/babel">
+    function HotelBookingForm() {
+      const [formData, setFormData] = React.useState({
+        name: "",
+        email: "",
+        roomType: "Single",
+        checkIn: "",
+        checkOut: "",
+      });
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+      };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+          const response = await fetch("/api/bookings", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              roomType: formData.roomType,
+              checkIn: formData.checkIn,
+              checkOut: formData.checkOut,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            alert(`Booking confirmed for ${formData.name} (${formData.roomType} room).`);
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("There was an error with the booking.");
+        }
+      };
+
+      return (
+        <form onSubmit={handleSubmit}>
+          <h2>Hotel Room Booking</h2>
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <select
+            name="roomType"
+            value={formData.roomType}
+            onChange={handleChange}
+          >
+            <option value="Single">Single</option>
+            <option value="Double">Double</option>
+            <option value="Suite">Suite</option>
+          </select>
+          <input
+            type="date"
+            name="checkIn"
+            value={formData.checkIn}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="date"
+            name="checkOut"
+            value={formData.checkOut}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">Book Now</button>
+        </form>
+      );
+    }
+
+    ReactDOM.render(<HotelBookingForm />, document.getElementById("app"));
+  </script>
+</body>
+</html>
