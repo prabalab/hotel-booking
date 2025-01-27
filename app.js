@@ -35,6 +35,9 @@ app.get("/confirmation", (req, res) => {
   }
 });
 
+//Use the PDF generation route
+app.use("/api", pdfRouter);  // Prefix API routes with '/api'
+
 // Fallback route to serve the HTML file for any other routes (e.g., / or undefined routes)
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
