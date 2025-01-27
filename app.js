@@ -13,24 +13,26 @@ app.use("/api/bookings", bookingRoutes);
 // Serve the static HTML page
 app.use(express.static(path.join(__dirname, "public")));
 
-
-app.use(express.urlencoded({ extended: true }));
-
 // Set EJS as the template engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+app.use(express.urlencoded({ extended: true }));
 
 // Route to render the confirmation page
 app.get("/confirmation", (req, res) => {
   const { email, checkIn } = req.query;
 
-  // Check if the required query parameters are provided
   if (!email || !checkIn) {
     return res.status(400).send("Missing email or check-in date in query parameters.");
   }
 
-  // Render the EJS page with the passed data
-  res.render("confirmation", { email, checkIn });
+  try {
+    res.render("confirmation", { email, checkIn });
+  } catch (error) {
+    console.error("Error rendering EJS:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 // Fallback route to serve the HTML file for any other routes (e.g., / or undefined routes)
