@@ -28,7 +28,7 @@ app.get("/confirmation", (req, res) => {
   }
 
   try {
-    res.render("confirmation", { email, checkIn });
+    res.render("confirmation.ejs", { email, checkIn });
   } catch (error) {
     console.error("Error rendering EJS:", error);
     res.status(500).send("Internal Server Error");
