@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const bookingRoutes = require("./routes/booking");
+const pdfRouter = require("./routes/pdfRouter");  // Import the router
 
 const app = express();
 
