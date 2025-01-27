@@ -1,5 +1,6 @@
 const express = require("express");
 const { Pool } = require("pg");
+const pool = require("../db"); // Use the combined db.js
 const PDFDocument = require("pdfkit");
 
 const router = express.Router();
