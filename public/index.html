@@ -83,49 +83,6 @@
   }
 };
 
-     /* const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-      };
-
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-          const response = await fetch("/api/bookings", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: formData.name,
-              email: formData.email,
-              roomType: formData.roomType,
-              checkIn: formData.checkIn,
-              checkOut: formData.checkOut,
-            }),
-          });
-
-          const result = await response.json();
-
-          if (response.ok) {
-            alert(`Booking confirmed for ${formData.name} (${formData.roomType} room).`);
-            setFormData({
-        name: "",
-        email: "",
-        roomType: "Single",
-        checkIn: "",
-        checkOut: "",
-      });
-          } else {
-            alert(`Error: ${result.message}`);
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          alert("There was an error with the booking.");
-        }
-      }; */
-
       return (
         <form onSubmit={handleSubmit}>
           <h2>Hotel Room Booking</h2>
