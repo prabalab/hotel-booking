@@ -48,7 +48,42 @@
         checkOut: "",
       });
 
-      const handleChange = (e) => {
+
+      const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("/api/bookings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        roomType: formData.roomType,
+        checkIn: formData.checkIn,
+        checkOut: formData.checkOut,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      // Redirect to another page with email and check-in date as query parameters
+      window.location.href = `/confirmation?email=${encodeURIComponent(
+        formData.email
+      )}&checkIn=${encodeURIComponent(formData.checkIn)}`;
+    } else {
+      alert(`Error: ${result.message}`);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("There was an error with the booking.");
+  }
+};
+
+     /* const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
       };
@@ -89,7 +124,7 @@
           console.error("Error:", error);
           alert("There was an error with the booking.");
         }
-      };
+      }; */
 
       return (
         <form onSubmit={handleSubmit}>
