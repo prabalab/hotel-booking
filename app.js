@@ -13,10 +13,6 @@ app.use("/api/bookings", bookingRoutes);
 // Serve the static HTML page
 app.use(express.static(path.join(__dirname, "public")));
 
-// Fallback route to serve the HTML file for any other routes (e.g., / or undefined routes)
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -67,6 +63,11 @@ app.get("/confirmation", (req, res) => {
     </body>
     </html>
   `);
+});
+
+// Fallback route to serve the HTML file for any other routes (e.g., / or undefined routes)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Start the server
